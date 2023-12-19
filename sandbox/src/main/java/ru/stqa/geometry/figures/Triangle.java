@@ -9,11 +9,11 @@ public class Triangle {
         System.out.println(textArea);
     }
 
-    private static double triangleArea(double a, double b, double c, double p) {
+    public static double triangleArea(double a, double b, double c, double p) {
         return Math.sqrt(p * (p - a) * (p - b) * (p - c));
     }
 
-    private static double semiperimeter(double a, double b, double c) {
+    public static double semiperimeter(double a, double b, double c) {
         return (a + b + c) / 2;
 
     }
@@ -23,7 +23,7 @@ public class Triangle {
         System.out.println(textPerimeter);
     }
 
-    private static double trianglePerimeter(double a, double b, double c) {
+    public static double trianglePerimeter(double a, double b, double c) {
         return a + b + c;
     }
 }
