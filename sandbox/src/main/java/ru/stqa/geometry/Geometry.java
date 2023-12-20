@@ -4,9 +4,9 @@ import ru.stqa.geometry.figures.Triangle;
 
 public class Geometry {
     public static void main(String[] args) {
-        Triangle.printTrianglePerimeter(3,4,5);
+        Triangle.printTrianglePerimeter(new Triangle(3,4,5));
 
-        Triangle.printTriangleArea(6, 5, 2.2);
+        Triangle.printTriangleArea(new Triangle(6., 5., 2.2));
 
     }
 

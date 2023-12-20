@@ -1,27 +1,26 @@
 package ru.stqa.geometry.figures;
 
-import java.math.RoundingMode;
 
-public class Triangle {
 
-    public static void printTriangleArea(double a, double b, double c) {
-        // Вопрос! Если использую для ввывода эту строку, то результат расчёта = 5.28, при этом в тесте расчёт = 5.279999999999998
-        // String textArea = String.format("Площядь треуголника с сторонами %.1f / %.1f / %.1f = %f ", a, b, c, triangleArea(a,b,c));
-        String textArea = String.format("Площядь треуголника с сторонами %.1f / %.1f / %.1f = " + triangleArea(a,b,c), a, b, c);
+public record Triangle(double sideA, double sideB, double sideC) {
+
+    public static void printTriangleArea(Triangle t) {
+        String textArea = String.format("Площядь треуголника с сторонами %.1f / %.1f / %.1f = " + t.triangleArea(), t.sideA, t.sideB, t.sideC);
         System.out.println(textArea);
     }
 
-    public static double triangleArea(double a, double b, double c) {
-        var p = (a + b + c) / 2;
-        return Math.sqrt(p * (p - a) * (p - b) * (p - c));
-    }
-
-    public static void printTrianglePerimeter(double sideA, double b, double c){
-        String textPerimeter = String.format("Периметр треуголника с сторонами %.1f / %.1f / %.1f = %.2f" , sideA, b, c, trianglePerimeter(sideA, b, c));
+    public static void printTrianglePerimeter(Triangle t){
+        String textPerimeter = String.format("Периметр треуголника с сторонами %.1f / %.1f / %.1f = %.2f" , t.sideA, t.sideB, t.sideC, t.trianglePerimeter());
         System.out.println(textPerimeter);
     }
 
-    public static double trianglePerimeter(double a, double b, double c) {
-        return a + b + c;
+    public double trianglePerimeter() {
+        return this.sideA + this.sideB + this.sideC;
+    }
+
+    public double triangleArea() {
+        var p = (this.sideA + this.sideB + this.sideC) / 2;
+        return Math.sqrt(p * (p - this.sideA) * (p - this.sideB) * (p - this.sideC));
+
     }
 }
