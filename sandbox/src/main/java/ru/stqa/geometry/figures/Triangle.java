@@ -19,7 +19,7 @@ public record Triangle(double sideA, double sideB, double sideC) {
     }
 
     public double triangleArea() {
-        var p = (this.sideA + this.sideB + this.sideC) / 2;
+        var p = trianglePerimeter() / 2;
         return Math.sqrt(p * (p - this.sideA) * (p - this.sideB) * (p - this.sideC));
 
     }
