@@ -18,4 +18,39 @@ public class TriangleTests {
         var result = t.triangleArea();
         Assertions.assertEquals(5.279999999999998, result);
     }
+
+    @Test
+    void cannotCreateTriangleWithNegativeSide() {
+        try {
+            new Triangle(-4, 0, 5);
+            System.out.println("Test fail");
+            Assertions.fail();
+        } catch (IllegalArgumentException exception) {
+            System.out.println("Test passed");
+
+        }
+    }
+    @Test
+    void cannotCreateTriangleWithZeroSide() {
+        try {
+            new Triangle(4, 0, 5);
+            System.out.println("Test fail");
+            Assertions.fail();
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception);
+
+        }
+    }
+
+    @Test
+    void sumTwoSidesCannotBeLessThirdSide () {
+        try {
+            new Triangle(6,2,3);
+            System.out.println("Test fail");
+            Assertions.fail();
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception);
+        }
+    }
 }
+
