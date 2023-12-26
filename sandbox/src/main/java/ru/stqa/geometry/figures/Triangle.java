@@ -8,7 +8,7 @@ public record Triangle(double sideA, double sideB, double sideC) {
         if (sideA <= 0 || sideB <= 0 || sideC <= 0) {
             throw new IllegalArgumentException("A side of triangle cannot be less or equal to zero.");
         }
-        if (!((sideA+sideB) < sideC) | !((sideB+sideC) < sideA) | !((sideA+sideC) < sideB)) {
+        if (!((sideA+sideB) > sideC) | !((sideB+sideC) > sideA) | !((sideA+sideC) > sideB)) {
            throw new IllegalArgumentException("The sum of a two sides of triangle can not be less than the third side.");
        }
     }
