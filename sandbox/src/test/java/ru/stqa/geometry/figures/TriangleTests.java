@@ -45,12 +45,28 @@ public class TriangleTests {
     @Test
     void sumTwoSidesCannotBeLessThirdSide () {
         try {
-            new Triangle(6,2,3);
+            new Triangle(9,7,1);
             System.out.println("Test fail");
             Assertions.fail();
         } catch (IllegalArgumentException exception) {
             System.out.println(exception);
         }
     }
+
+    @Test
+    void strictComparisonOfTriangles() {
+        var t1 = new Triangle(9,7,5);
+        var t2 = new Triangle(9,7,5);
+        Assertions.assertEquals(t1, t2);
+    }
+
+    @Test
+    void flexibleTriangleComparison() {
+        var t1 = new Triangle(7,5,9);
+        var t2 = new Triangle(9,7,5);
+        Assertions.assertEquals(t1, t2);
+    }
+
+
 }
 
