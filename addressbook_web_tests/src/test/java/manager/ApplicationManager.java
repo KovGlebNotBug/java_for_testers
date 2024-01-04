@@ -11,7 +11,7 @@ public class ApplicationManager {
     protected WebDriver driver;
     private LoginHelper session;
     private GroupHelper groups;
-    private ContactHelper contacts;
+    public ContactHelper contacts;
 
     public void init() {
         if (driver == null) {
@@ -29,15 +29,16 @@ public class ApplicationManager {
         }
         return session;
     }
+
     public GroupHelper groups() {
-        if (groups == null){
+        if (groups == null) {
             groups = new GroupHelper(this);
         }
         return groups;
     }
-    
+
     public ContactHelper contacts() {
-        if (contacts == null){
+        if (contacts == null) {
             contacts = new ContactHelper(this);
         }
         return contacts;
