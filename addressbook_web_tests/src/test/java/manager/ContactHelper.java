@@ -10,11 +10,18 @@ public class ContactHelper extends HelperBase {
         super(manager);
     }
 
+    public void createContact(ContactData contact) {
+        openContactsPage();
+        initContactCreation();
+        fillContactForm(contact);
+        submitContactCreation();
+        returnToHomePage();
+    }
 
     public void removeContact() {
         openContactsPage();
-        manager.driver.findElement(By.name("selected[]")).click();
-        manager.driver.findElement(By.xpath("//input[@value='Delete']")).click();
+        selectContact();
+        submitRemoveContact();
     }
 
     public void openContactsPage() {
@@ -23,25 +30,41 @@ public class ContactHelper extends HelperBase {
         }
     }
 
+    private void selectContact() {
+        manager.driver.findElement(By.name("selected[]")).click();
+    }
+
+    private void submitRemoveContact() {
+        manager.driver.findElement(By.xpath("//input[@value='Delete']")).click();
+    }
+
     public boolean isContactPresent() {
         openContactsPage();
         return manager.isElementPresent(By.name("selected[]"));
     }
 
-    public void createContact(ContactData contact) {
-        openContactsPage();
+    private void initContactCreation() {
         manager.driver.findElement(By.linkText("add new")).click();
-        manager.driver.findElement(By.name("firstname")).click();
-        manager.driver.findElement(By.name("firstname")).sendKeys(contact.firstName());
-        manager.driver.findElement(By.name("lastname")).click();
-        manager.driver.findElement(By.name("lastname")).sendKeys(contact.lastName());
-        manager.driver.findElement(By.name("address")).click();
-        manager.driver.findElement(By.name("address")).sendKeys(contact.address());
-        manager.driver.findElement(By.name("home")).click();
-        manager.driver.findElement(By.name("home")).sendKeys(contact.phone());
-        manager.driver.findElement(By.name("email")).click();
-        manager.driver.findElement(By.name("email")).sendKeys(contact.email());
+    }
+
+    private void submitContactCreation() {
         manager.driver.findElement(By.xpath("(//input[@name=\'submit\'])[2]")).click();
+    }
+
+    private void returnToHomePage() {
         manager.driver.findElement(By.linkText("home page")).click();
+    }
+
+    private void fillContactForm(ContactData contact) {
+        click(By.name("firstname"));
+        type(By.name("firstname"), contact.firstName());
+        click(By.name("lastname"));
+        type(By.name("lastname"), contact.lastName());
+        click(By.name("address"));
+        type(By.name("address"), contact.address());
+        click(By.name("home"));
+        type(By.name("home"), contact.phone());
+        click(By.name("email"));
+        type(By.name("email"), contact.email());
     }
 }
