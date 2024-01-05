@@ -24,6 +24,24 @@ public class ContactHelper extends HelperBase {
         submitRemoveContact();
     }
 
+    private void fillContactForm(ContactData contact) {
+        click(By.name("firstname"));
+        type(By.name("firstname"), contact.firstName());
+        click(By.name("lastname"));
+        type(By.name("lastname"), contact.lastName());
+        click(By.name("address"));
+        type(By.name("address"), contact.address());
+        click(By.name("home"));
+        type(By.name("home"), contact.phone());
+        click(By.name("email"));
+        type(By.name("email"), contact.email());
+    }
+
+    public int getContactCount() {
+        openContactsPage();
+        return manager.driver.findElements(By.name("selected[]")).size();
+    }
+
     public void openContactsPage() {
         if (!manager.isElementPresent(By.name("searchstring"))) {
             manager.driver.get("http://localhost/addressbook/");
@@ -38,11 +56,6 @@ public class ContactHelper extends HelperBase {
         manager.driver.findElement(By.xpath("//input[@value='Delete']")).click();
     }
 
-    public boolean isContactPresent() {
-        openContactsPage();
-        return manager.isElementPresent(By.name("selected[]"));
-    }
-
     private void initContactCreation() {
         manager.driver.findElement(By.linkText("add new")).click();
     }
@@ -53,18 +66,5 @@ public class ContactHelper extends HelperBase {
 
     private void returnToHomePage() {
         manager.driver.findElement(By.linkText("home page")).click();
-    }
-
-    private void fillContactForm(ContactData contact) {
-        click(By.name("firstname"));
-        type(By.name("firstname"), contact.firstName());
-        click(By.name("lastname"));
-        type(By.name("lastname"), contact.lastName());
-        click(By.name("address"));
-        type(By.name("address"), contact.address());
-        click(By.name("home"));
-        type(By.name("home"), contact.phone());
-        click(By.name("email"));
-        type(By.name("email"), contact.email());
     }
 }

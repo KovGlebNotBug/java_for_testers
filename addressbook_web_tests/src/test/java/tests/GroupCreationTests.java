@@ -28,9 +28,9 @@ public class GroupCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("groupProvider")
     public void canCreateMultipleGroups(GroupData group) {
-        int groupCount = app.groups().getCount();
+        int groupCount = app.groups().getGroupCount();
         app.groups().createGroup(group);
-        int newGroupCount = app.groups().getCount();
+        int newGroupCount = app.groups().getGroupCount();
         Assertions.assertEquals(groupCount + 1, newGroupCount);
     }
 
@@ -43,37 +43,9 @@ public class GroupCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("negativeGroupProvider")
     public void canNotCreateGroup(GroupData group) {
-        int groupCount = app.groups().getCount();
+        int groupCount = app.groups().getGroupCount();
         app.groups().createGroup(group);
-        int newGroupCount = app.groups().getCount();
+        int newGroupCount = app.groups().getGroupCount();
         Assertions.assertEquals(groupCount, newGroupCount);
     }
-
-
-
-    /*
-    @ParameterizedTest
-    @ValueSource(strings = {"group name", "group name'"})
-    public void canCreateGroup(String name) {
-        int groupCount = app.groups().getCount();
-        app.groups().createGroup(new GroupData(name, "group header", "group footer"));
-        int newGroupCount = app.groups().getCount();
-        Assertions.assertEquals(groupCount + 1, newGroupCount);
-    }
-    */
-
-    /*
-    @Test
-    public void canCreateGroupWithEmptyName() {
-        app.groups().createGroup(new GroupData());
-    }
-    */
-
-    /*
-    @Test
-    public void canCreateGroupWithNameOnly() {
-        app.groups().createGroup(new GroupData().withName("some name"));
-    }
-     */
-
 }
