@@ -1,11 +1,13 @@
 package tests;
 
 import model.ContactData;
+import model.GroupData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ContactCreationTests extends TestBase {
@@ -33,10 +35,17 @@ public class ContactCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("contactProvider")
     public void canCreateMultipleContact(ContactData contact) {
-        int contactCount = app.contacts().getContactCount();
+        var oldContactsList = app.contacts().getContactList();
         app.contacts().createContact(contact);
-        int newContactCount = app.contacts().getContactCount();
-        Assertions.assertEquals(contactCount + 1, newContactCount);
+        var newContactList = app.contacts().getContactList();
+        Comparator<ContactData> compareById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+        newContactList.sort(compareById);
+        var expectedList = new ArrayList<>(oldContactsList);
+        expectedList.add(contact.withId(newContactList.get(newContactList.size()-1).id()).withAddress("").withPhone("").withEmail(""));
+        expectedList.sort(compareById);
+        Assertions.assertEquals(newContactList, expectedList);
     }
 
 }
