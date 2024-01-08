@@ -1,7 +1,6 @@
 package tests;
 
 import model.ContactData;
-import model.GroupData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -43,7 +42,7 @@ public class ContactCreationTests extends TestBase {
         };
         newContactList.sort(compareById);
         var expectedList = new ArrayList<>(oldContactsList);
-        expectedList.add(contact.withId(newContactList.get(newContactList.size()-1).id()).withAddress("").withPhone("").withEmail(""));
+        expectedList.add(contact.withId(newContactList.get(newContactList.size() - 1).id()).withAddress("").withPhone("").withEmail(""));
         expectedList.sort(compareById);
         Assertions.assertEquals(newContactList, expectedList);
     }

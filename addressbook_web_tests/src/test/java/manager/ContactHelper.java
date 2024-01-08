@@ -27,6 +27,15 @@ public class ContactHelper extends HelperBase {
         submitRemoveContact();
     }
 
+    public void modifyContact(ContactData contact, ContactData modifyContact) {
+        openContactsPage();
+        initContactModification(contact);
+        fillContactForm(modifyContact);
+        submitContactModification();
+        returnToHomePage();
+
+    }
+
     private void fillContactForm(ContactData contact) {
         click(By.name("firstname"));
         type(By.name("firstname"), contact.firstName());
@@ -82,5 +91,14 @@ public class ContactHelper extends HelperBase {
             contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
         }
         return contacts;
+    }
+
+
+    private void submitContactModification() {
+        click(By.xpath("//input[@name='update'][2]"));
+    }
+
+    private void initContactModification(ContactData contact) {
+        click(By.xpath(String.format("//td[./input[@id='%s']]/..//td//a//img[@title='Edit']", contact.id())));
     }
 }
