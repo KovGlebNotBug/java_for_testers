@@ -2,8 +2,6 @@ package tests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import common.CommonFunctions;
 import model.GroupData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,9 +24,9 @@ public class GroupCreationTests extends TestBase {
 //                }
 //            }
 //        }
-//        ObjectMapper mapper = new ObjectMapper();
-        XmlMapper mapper = new XmlMapper();
-        var value = mapper.readValue(new File("groups.xml"), new TypeReference<List<GroupData>>() {});
+        ObjectMapper mapper = new ObjectMapper();
+        var value = mapper.readValue(new File("groups.json"), new TypeReference<List<GroupData>>() {
+        });
         result.addAll(value);
         return result;
     }
@@ -44,7 +42,7 @@ public class GroupCreationTests extends TestBase {
         };
         newGroups.sort(compareById);
         var expectedList = new ArrayList<>(oldGroups);
-        expectedList.add(group.withId(newGroups.get(newGroups.size()-1).id()).withHeader("").withFooter(""));
+        expectedList.add(group.withId(newGroups.get(newGroups.size() - 1).id()).withHeader("").withFooter(""));
         expectedList.sort(compareById);
         Assertions.assertEquals(newGroups, expectedList);
 

@@ -6,25 +6,25 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import common.CommonFunctions;
+import model.ContactData;
 import model.GroupData;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Generator {
 
-    @Parameter(names={"--type", "-t"})
+    @Parameter(names = {"--type", "-t"})
     String type;
 
-    @Parameter(names={"--output", "-o"})
+    @Parameter(names = {"--output", "-o"})
     String output;
 
-    @Parameter(names={"--format", "-f"})
+    @Parameter(names = {"--format", "-f"})
     String format;
 
-    @Parameter(names={"--count", "-n"})
+    @Parameter(names = {"--count", "-n"})
     int count;
 
     public static void main(String[] args) throws IOException {
@@ -52,7 +52,17 @@ public class Generator {
     }
 
     private Object generateContacts() {
-        return null;
+        var result = new ArrayList<ContactData>();
+        for (int i = 0; i < count; i++) {
+            result.add(new ContactData(
+                    "",
+                    CommonFunctions.randomString(i * 10),
+                    CommonFunctions.randomString(i * 10),
+                    CommonFunctions.randomString(i * 10),
+                    CommonFunctions.randomString(i * 10),
+                    CommonFunctions.randomString(i * 10)));
+        }
+        return result;
     }
 
     private Object generateGroups() {
@@ -72,14 +82,17 @@ public class Generator {
             ObjectMapper mapper = new ObjectMapper();
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
             var json = mapper.writeValueAsString(data);
-
             try (var writer = new FileWriter(output)) {
                 writer.write(json);
             }
-        } if (format.equals("xml")) {
+        }
+        if (format.equals("xml")) {
             XmlMapper mapper = new XmlMapper();
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
-            mapper.writeValue(new File(output), data);
+            var xml = mapper.writeValueAsString(data);
+            try (var writer = new FileWriter(output)) {
+                writer.write(xml);
+            }
         } else {
             throw new IllegalArgumentException("Неизвестный формат данных " + format);
         }
