@@ -47,6 +47,7 @@ public class Generator {
         } else if ("contacts".equals((type))) {
             return generateContacts();
         } else {
+            System.err.println("Неизвестный тип данных " + type);
             throw new IllegalArgumentException("Неизвестный тип данных " + type);
         }
     }
@@ -85,8 +86,7 @@ public class Generator {
             try (var writer = new FileWriter(output)) {
                 writer.write(json);
             }
-        }
-        if (format.equals("xml")) {
+        } else if (format.equals("xml")) {
             XmlMapper mapper = new XmlMapper();
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
             var xml = mapper.writeValueAsString(data);
