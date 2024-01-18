@@ -47,7 +47,6 @@ public class Generator {
         } else if ("contacts".equals((type))) {
             return generateContacts();
         } else {
-            System.err.println("Неизвестный тип данных " + type);
             throw new IllegalArgumentException("Неизвестный тип данных " + type);
         }
     }
