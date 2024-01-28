@@ -55,6 +55,18 @@ public class GroupCreationTests extends TestBase {
         expectedList.add(group.withId(maxId));
         expectedList.sort(compareById);
         Assertions.assertEquals(newGroups, expectedList);
+
+        // *extra task
+        // comparing of list from ui and list from DB
+        var newUiGroups = app.groups().getList();
+        newUiGroups.sort(compareById);
+        var expectedNewList = new ArrayList<GroupData>();
+        for (var newGroup : newGroups) {
+            var id = newGroup.id();
+            var name = newGroup.name();
+            expectedNewList.add(new GroupData().withId(id).withName(name).withHeader("").withFooter(""));
+        }
+        Assertions.assertEquals(expectedNewList, newUiGroups);
     }
 
     public static List<GroupData> negativeGroupProvider() {

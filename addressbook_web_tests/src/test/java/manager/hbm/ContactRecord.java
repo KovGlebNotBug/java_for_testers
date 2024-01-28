@@ -28,11 +28,6 @@ public class ContactRecord {
     public String email3 = CommonFunctions.randomString(2);
     public String homepage = CommonFunctions.randomString(2);
 
-
-
-
-
-
     public ContactRecord() {
     }
 
