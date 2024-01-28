@@ -58,6 +58,7 @@ public class ContactHelper extends HelperBase {
         if (!manager.isElementPresent(By.name("searchstring"))) {
             manager.driver.get("http://localhost/addressbook/");
         }
+        click(By.linkText("home"));
     }
 
     private void selectContact(ContactData contact) {
@@ -80,7 +81,7 @@ public class ContactHelper extends HelperBase {
         manager.driver.findElement(By.linkText("home page")).click();
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> getList() {
         openContactsPage();
         var contacts = new ArrayList<ContactData>();
         var trTags = manager.driver.findElements(By.xpath("//tr[@name='entry']"));
