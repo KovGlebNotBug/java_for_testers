@@ -106,6 +106,13 @@ public class HibernateHelper extends HelperBase {
                 record.address,
                 record.phone,
                 record.email);
+
+//        return new ContactData().withId("" + record.id)
+//                .withFirstName(record.firstname)
+//                .withLastName(record.lastname)
+//                .withAddress(record.address)
+//                .withPhone(record.phone)
+//                .withEmail(record.email);
     }
 
     private static ContactRecord convertContact(ContactData data) {
@@ -120,5 +127,11 @@ public class HibernateHelper extends HelperBase {
                 data.address(),
                 data.phone(),
                 data.email());
+    }
+
+    public List<ContactData> getContactInGroup(GroupData group) {
+        return convertContactList(sessionFactory.inSession(session -> {
+            return session.get(GroupRecord.class, group.id()).contacts;
+        }));
     }
 }

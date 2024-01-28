@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import common.CommonFunctions;
 import model.ContactData;
+import model.GroupData;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -13,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 public class ContactCreationTests extends TestBase {
 
@@ -62,6 +65,25 @@ public class ContactCreationTests extends TestBase {
         expectedList.add(contact.withId(maxId));
         expectedList.sort(compareById);
         Assertions.assertEquals(newContactList, expectedList);
+    }
+
+    @Test
+    public void canAddContactToGroup() {
+        if (app.hbm().getContactCount() == 0) {
+            app.hbm().createContact(new ContactData("", "first name", "last name", "address test", "phone test 123", "email@example.com"));
+        }
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
+        }
+        var contact = app.hbm().getContactList().get(0);
+        var group = app.hbm().getGroupList().get(0);
+        var oldRelated = app.hbm().getContactInGroup(group);
+        app.contacts().addContactToGroup(contact, group);
+        var newRelated = app.hbm().getContactInGroup(group);
+
+
+
+
     }
 
 }
