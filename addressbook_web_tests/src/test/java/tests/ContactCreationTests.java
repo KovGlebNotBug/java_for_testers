@@ -81,7 +81,12 @@ public class ContactCreationTests extends TestBase {
         app.contacts().addContactToGroup(contact, group);
         var newRelated = app.hbm().getContactInGroup(group);
 
+        var expectedList = new ArrayList<>(oldRelated);
+        expectedList.add(contact);
+        Assertions.assertEquals(newRelated, expectedList);
+    }
 
+    public void canRemoveContactFromGroup() {
 
 
     }

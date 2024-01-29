@@ -61,7 +61,7 @@ public class HibernateHelper extends HelperBase {
     public void createContact(ContactData contactData) {
         sessionFactory.inSession(session -> {
             session.getTransaction().begin();
-            session.persist(convertContact(contactData));
+            session.persist(convertContact2(contactData));
             session.getTransaction().commit();
         });
     }
@@ -115,7 +115,7 @@ public class HibernateHelper extends HelperBase {
 //                .withEmail(record.email);
     }
 
-    private static ContactRecord convertContact(ContactData data) {
+    private static ContactRecord convertContact2(ContactData data) {
         var id = data.id();
         if ("".equals(id)) {
             id = "0";
@@ -130,8 +130,8 @@ public class HibernateHelper extends HelperBase {
     }
 
     public List<ContactData> getContactInGroup(GroupData group) {
-        return convertContactList(sessionFactory.inSession(session -> {
-            return session.get(GroupRecord.class, group.id()).contacts;
-        }));
+        return sessionFactory.fromSession(session -> {
+            return convertContactList(session.get(GroupRecord.class, group.id()).contacts);
+        });
     }
 }
