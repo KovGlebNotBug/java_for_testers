@@ -54,8 +54,15 @@ public class ContactHelper extends HelperBase {
     public void addContactToGroup(ContactData contact, GroupData group) {
         openContactsPage();
         selectContact(contact);
-        selectGroup(group);
+        selectGroupForAddingContact(group);
         submitAddContactToGroup();
+    }
+
+    public void canRemoveContactFromGroup(GroupData group, ContactData contact) {
+        openContactsPage();
+        selectGroupForView(group);
+        selectContact(contact);
+        submitRemovingContactFromGroup();
     }
 
     public int getContactCount() {
@@ -117,8 +124,16 @@ public class ContactHelper extends HelperBase {
 
     }
 
-    private void selectGroup(GroupData group) {
+    private void selectGroupForAddingContact(GroupData group) {
         new Select(manager.driver.findElement(By.name("to_group"))).selectByValue(group.id());
 
+    }
+
+    private void submitRemovingContactFromGroup() {
+        click(By.name("remove"));
+    }
+
+    private void selectGroupForView(GroupData group) {
+        new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
     }
 }
