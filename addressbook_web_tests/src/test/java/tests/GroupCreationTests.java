@@ -11,9 +11,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GroupCreationTests extends TestBase {
@@ -34,7 +35,7 @@ public class GroupCreationTests extends TestBase {
         return result;
     }
 
-    public static Stream<GroupData> singleRandomGroup() {
+    public static Stream<GroupData> randomGroups() {
         Supplier<GroupData> randomGroup = () -> new GroupData()
                 .withName(CommonFunctions.randomString(10))
                 .withHeader(CommonFunctions.randomString(20))
@@ -43,33 +44,38 @@ public class GroupCreationTests extends TestBase {
     }
 
     @ParameterizedTest
-    @MethodSource("singleRandomGroup")
+    @MethodSource("randomGroups")
     public void canCreateGroup(GroupData group) {
         var oldGroups = app.hbm().getGroupList();
         app.groups().createGroup(group);
         var newGroups = app.hbm().getGroupList();
-        Comparator<GroupData> compareById = (o1, o2) -> {
-            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
-        };
-        newGroups.sort(compareById);
-        var maxId = newGroups.get(newGroups.size() - 1).id();
+
+        // вместо сравнения "списков" используется сравнение "множества"
+        // что позволяет не использовать функцию сортировки
+//        Comparator<GroupData> compareById = (o1, o2) -> {
+//            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+//        };
+//        newGroups.sort(compareById);
+
+        var extraGroups = newGroups.stream().filter(g -> ! oldGroups.contains(g)).toList();
+        var newId = extraGroups.get(0).id();
 
         var expectedList = new ArrayList<>(oldGroups);
-        expectedList.add(group.withId(maxId));
-        expectedList.sort(compareById);
-        Assertions.assertEquals(newGroups, expectedList);
+        expectedList.add(group.withId(newId));
+//        expectedList.sort(compareById);
+        Assertions.assertEquals(Set.copyOf(newGroups), Set.copyOf(expectedList));
 
         // *extra task
         // comparing of list from ui and list from DB
         var newUiGroups = app.groups().getList();
-        newUiGroups.sort(compareById);
+//        newUiGroups.sort(compareById);
         var expectedNewList = new ArrayList<GroupData>();
         for (var newGroup : newGroups) {
             var id = newGroup.id();
             var name = newGroup.name();
             expectedNewList.add(new GroupData().withId(id).withName(name).withHeader("").withFooter(""));
         }
-        Assertions.assertEquals(expectedNewList, newUiGroups);
+        Assertions.assertEquals(Set.copyOf(expectedNewList), Set.copyOf(newUiGroups));
     }
 
     public static List<GroupData> negativeGroupProvider() {
