@@ -2,6 +2,7 @@ package manager.hbm;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +25,8 @@ public class GroupRecord {
     @JoinTable(name = "address_in_groups",
             joinColumns = @JoinColumn(name = "group_id"),
             inverseJoinColumns = @JoinColumn(name = "id"))
-    public List<ContactRecord> contacts;
+    public List<ContactRecord> contacts; //= new ArrayList<>();
+
 
     public GroupRecord() {
     }

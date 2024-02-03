@@ -51,7 +51,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("email"), contact.email());
     }
 
-    public void addContactToGroup(ContactData contact, GroupData group) {
+    public void addContactToGroup(GroupData group, ContactData contact) {
         openContactsPage();
         selectContact(contact);
         selectGroupForAddingContact(group);

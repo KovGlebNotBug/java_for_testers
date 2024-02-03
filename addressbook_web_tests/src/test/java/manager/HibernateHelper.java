@@ -41,7 +41,7 @@ public class HibernateHelper extends HelperBase {
     public void createGroup(GroupData groupData) {
         sessionFactory.inSession(session -> {
             session.getTransaction().begin();
-            session.persist(convertGroup2(groupData));
+            session.persist(convertToGroupRecord(groupData));
             session.getTransaction().commit();
         });
     }
@@ -61,7 +61,7 @@ public class HibernateHelper extends HelperBase {
     public void createContact(ContactData contactData) {
         sessionFactory.inSession(session -> {
             session.getTransaction().begin();
-            session.persist(convertContact2(contactData));
+            session.persist(convertToContactRecord(contactData));
             session.getTransaction().commit();
         });
     }
@@ -82,7 +82,7 @@ public class HibernateHelper extends HelperBase {
                 record.footer);
     }
 
-    private static GroupRecord convertGroup2(GroupData data) {
+    public GroupRecord convertToGroupRecord(GroupData data) {
         var id = data.id();
         if ("".equals(id)) {
             id = "0";
@@ -115,7 +115,7 @@ public class HibernateHelper extends HelperBase {
 //                .withEmail(record.email);
     }
 
-    private static ContactRecord convertContact2(ContactData data) {
+    public ContactRecord convertToContactRecord(ContactData data) {
         var id = data.id();
         if ("".equals(id)) {
             id = "0";
@@ -132,6 +132,15 @@ public class HibernateHelper extends HelperBase {
     public List<ContactData> getContactInGroup(GroupData group) {
         return sessionFactory.fromSession(session -> {
             return convertContactList(session.get(GroupRecord.class, group.id()).contacts);
+        });
+    }
+
+    public void addContactToGroup (GroupRecord groupRecord, ContactRecord contactRecord) {
+        groupRecord.contacts.add(contactRecord);
+        sessionFactory.inSession(session -> {
+            session.getTransaction().begin();
+            session.update(groupRecord);
+            session.getTransaction().commit();
         });
     }
 }

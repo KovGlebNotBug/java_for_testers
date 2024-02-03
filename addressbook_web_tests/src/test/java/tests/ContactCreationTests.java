@@ -3,6 +3,7 @@ package tests;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import common.CommonFunctions;
+import manager.hbm.GroupRecord;
 import model.ContactData;
 import model.GroupData;
 import org.junit.jupiter.api.Assertions;
@@ -81,7 +82,7 @@ public class ContactCreationTests extends TestBase {
             app.contacts().canRemoveContactFromGroup(group, contact);
         }
         var oldRelated = app.hbm().getContactInGroup(group);
-        app.contacts().addContactToGroup(contact, group);
+        app.contacts().addContactToGroup( group, contact);
         var newRelated = app.hbm().getContactInGroup(group);
 
         var expectedList = new ArrayList<>(oldRelated);
@@ -99,9 +100,11 @@ public class ContactCreationTests extends TestBase {
         }
         var contact = app.hbm().getContactList().get(0);
         var group = app.hbm().getGroupList().get(0);
+        //var contactRecord = app.hbm().convertToContactRecord(contact);
+        //var groupRecord = app.hbm().convertToGroupRecord(group);
         var contactInGroup = app.hbm().getContactInGroup(group).contains(contact);
         if (!contactInGroup) {
-            app.contacts().addContactToGroup(contact, group);
+            app.contacts().addContactToGroup(group, contact);
         }
         var oldRelated = app.hbm().getContactInGroup(group);
         app.contacts().canRemoveContactFromGroup(group, contact);
