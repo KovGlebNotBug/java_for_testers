@@ -15,14 +15,16 @@ public class ContactRecord {
     public String lastname;
     public String address;
     @Column(name = "home")
-    public String phone;
+    public String phoneHome;
+    @Column(name = "mobile")
+    public String phoneMobile;
+    @Column(name = "work")
+    public String phoneWork;
     public String email;
     public String middlename = CommonFunctions.randomString(2);
     public String nickname = CommonFunctions.randomString(2);
     public String company = CommonFunctions.randomString(2);
     public String title = CommonFunctions.randomString(2);
-    public String mobile = CommonFunctions.randomString(2);
-    public String work = CommonFunctions.randomString(2);
     public String fax = CommonFunctions.randomString(2);
     public String email2 = CommonFunctions.randomString(2);
     public String email3 = CommonFunctions.randomString(2);
@@ -31,12 +33,23 @@ public class ContactRecord {
     public ContactRecord() {
     }
 
-    public ContactRecord( int id, String firstname, String lastname, String address, String phone, String email) {
+    public ContactRecord(
+            int id,
+            String firstname,
+            String lastname,
+            String address,
+            String phoneHome,
+            String phoneMobile,
+            String phoneWork,
+            String email
+    ) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
-        this.phone = phone;
+        this.phoneHome = phoneHome;
+        this.phoneMobile = phoneMobile;
+        this.phoneWork = phoneWork;
         this.email = email;
     }
 

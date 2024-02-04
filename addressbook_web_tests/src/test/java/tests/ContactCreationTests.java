@@ -3,7 +3,6 @@ package tests;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import common.CommonFunctions;
-import manager.hbm.GroupRecord;
 import model.ContactData;
 import model.GroupData;
 import org.junit.jupiter.api.Assertions;
@@ -26,9 +25,9 @@ public class ContactCreationTests extends TestBase {
         /*for (var firstName : List.of("", "first name")) {
             for (var lastName : List.of("", "last name")) {
                 for (var address : List.of("", "address")) {
-                    for (var phone : List.of("", "12345678")) {
+                    for (var phoneHome : List.of("", "12345678")) {
                         for (var email : List.of("", "email@example.com"))
-                            result.add(new ContactData(firstName, lastName, address, phone, email));
+                            result.add(new ContactData(firstName, lastName, address, phoneHome, email));
                     }
                 }
             }
@@ -45,7 +44,9 @@ public class ContactCreationTests extends TestBase {
                 .withFirstName(CommonFunctions.randomString(10))
                 .withLastName(CommonFunctions.randomString(20))
                 .withAddress(CommonFunctions.randomString(30))
-                .withPhone(CommonFunctions.randomString(10))
+                .withPhoneHome(CommonFunctions.randomString(10))
+                .withPhoneMobile(CommonFunctions.randomString(10))
+                .withPhoneWork(CommonFunctions.randomString(10))
                 .withEmail(CommonFunctions.randomString(10)));
     }
 
@@ -64,13 +65,20 @@ public class ContactCreationTests extends TestBase {
         var expectedList = new ArrayList<>(oldContactsList);
         expectedList.add(contact.withId(maxId));
         expectedList.sort(compareById);
-        Assertions.assertEquals(newContactList, expectedList);
+        Assertions.assertEquals(expectedList, newContactList);
     }
 
     @Test
     public void canAddContactToGroup() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "first name", "last name", "address test", "phone test 123", "email@example.com"));
+            app.hbm().createContact(new ContactData("",
+                    "first name",
+                    "last name",
+                    "address test",
+                    "phoneHomeTest123",
+                    "phoneMobileTest456",
+                    "phoneWorkTest789",
+                    "email@example.com"));
         }
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
@@ -93,7 +101,14 @@ public class ContactCreationTests extends TestBase {
     @Test
     public void canRemoveContactFromGroup() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "first name", "last name", "address test", "phone test 123", "email@example.com"));
+            app.hbm().createContact(new ContactData("",
+                    "first name",
+                    "last name",
+                    "address test",
+                    "phoneHomeTest123",
+                    "phoneMobileTest456",
+                    "phoneWorkTest789",
+                    "email@example.com"));
         }
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));

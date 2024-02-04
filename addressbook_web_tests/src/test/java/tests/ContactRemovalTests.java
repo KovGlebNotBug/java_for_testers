@@ -12,7 +12,7 @@ public class ContactRemovalTests extends TestBase {
     @Test
     public void canRemoveContact() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "first name", "last name", "address test", "phone test 123", "email@example.com"));
+            app.hbm().createContact(new ContactData("", "first name", "last name", "address test", "phoneHomeTest123", "phoneMobileTest456", "phoneWorkTest789", "email@example.com"));
         }
         var oldContacts = app.hbm().getContactList();
         var rnd = new Random();

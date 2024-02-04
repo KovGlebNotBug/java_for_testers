@@ -52,7 +52,7 @@ public class JdbcHelper extends HelperBase {
                         .withFirstName(result.getString("firstname"))
                         .withLastName(result.getString("lastname"))
                         .withAddress(result.getString("address"))
-                        .withPhone(result.getString("home"))
+                        .withPhoneHome(result.getString("home"))
                         .withEmail(result.getString("email")));
             }
         } catch (SQLException e) {

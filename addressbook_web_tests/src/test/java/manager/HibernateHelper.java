@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -115,14 +114,16 @@ public class HibernateHelper extends HelperBase {
                 record.firstname,
                 record.lastname,
                 record.address,
-                record.phone,
+                record.phoneHome,
+                record.phoneMobile,
+                record.phoneWork,
                 record.email);
 
 //        return new ContactData().withId("" + record.id)
 //                .withFirstName(record.firstname)
 //                .withLastName(record.lastname)
 //                .withAddress(record.address)
-//                .withPhone(record.phone)
+//                .withPhone(record.phoneHome)
 //                .withEmail(record.email);
     }
 
@@ -136,7 +137,9 @@ public class HibernateHelper extends HelperBase {
                 data.firstName(),
                 data.lastName(),
                 data.address(),
-                data.phone(),
+                data.phoneHome(),
+                data.phoneMobile(),
+                data.phoneWork(),
                 data.email());
     }
 
