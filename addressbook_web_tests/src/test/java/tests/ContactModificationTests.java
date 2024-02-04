@@ -20,7 +20,8 @@ public class ContactModificationTests extends TestBase {
                     "phoneHomeTest123",
                     "phoneMobileTest456",
                     "phoneWorkTest789",
-                    "email@example.com"));
+                    "email@example.com",
+                    "email2@example.com"));
         }
         var oldContactsList = app.hbm().getContactList();
         var rnd = new Random();

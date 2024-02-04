@@ -28,7 +28,7 @@ public class HibernateHelper extends HelperBase {
 
     public List<GroupData> getGroupList() {
         return convertGroupList(sessionFactory.fromSession(session -> {
-           return session.createQuery("from GroupRecord", GroupRecord.class).list();
+            return session.createQuery("from GroupRecord", GroupRecord.class).list();
         }));
     }
 
@@ -117,7 +117,8 @@ public class HibernateHelper extends HelperBase {
                 record.phoneHome,
                 record.phoneMobile,
                 record.phoneWork,
-                record.email);
+                record.email,
+                record.email2);
 
 //        return new ContactData().withId("" + record.id)
 //                .withFirstName(record.firstname)
@@ -140,7 +141,8 @@ public class HibernateHelper extends HelperBase {
                 data.phoneHome(),
                 data.phoneMobile(),
                 data.phoneWork(),
-                data.email());
+                data.email(),
+                data.email2());
     }
 
     public List<ContactData> getContactInGroup(GroupData group) {

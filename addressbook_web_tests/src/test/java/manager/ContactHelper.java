@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ContactHelper extends HelperBase {
 
@@ -56,6 +58,8 @@ public class ContactHelper extends HelperBase {
         type(By.name("work"), contact.phoneWork());
         click(By.name("email"));
         type(By.name("email"), contact.email());
+        click(By.name("email2"));
+        type(By.name("email2"), contact.email2());
     }
 
     public void addContactToGroup(GroupData group, ContactData contact) {
@@ -76,6 +80,65 @@ public class ContactHelper extends HelperBase {
         openContactsPage();
         return manager.driver.findElement(By.xpath(
                 String.format("//input[@id='%s']/../../td[6]", contact.id()))).getText();
+    }
+
+    public Map<String, String> getPhones() {
+        openContactsPage();
+        var result = new HashMap<String, String>();
+        List<WebElement> rows = manager.driver.findElements(By.name("entry"));
+        for (WebElement row : rows) {
+            var id = row.findElement(By.tagName("input")).getAttribute(("id"));
+            var phones = row.findElements(By.tagName("td")).get(5).getText();
+            result.put(id, phones);
+        }
+        return result;
+    }
+
+    // под вопросом, нужно перепроверить
+    public Map<String, String> getAddresses() {
+        openContactsPage();
+        var result = new HashMap<String, String>();
+        List<WebElement> rows = manager.driver.findElements(By.name("entry"));
+        for (WebElement row : rows) {
+            var id = row.findElement(By.tagName("input")).getAttribute(("id"));
+            var addresses = row.findElements(By.tagName("td")).get(3).getText();
+            result.put(id, addresses);
+        }
+        return result;
+    }
+
+    public String getAddressFromHomePage(ContactData contact) {
+        openContactsPage();
+        return manager.driver.findElement(By.xpath(
+                String.format("//input[@id='%s']/../../td[4]", contact.id()))).getText();
+    }
+
+    public String getAddressFromModificationPage(ContactData contact) {
+        openContactsPage();
+        initContactModification(contact);
+        return manager.driver.findElement(By.name("address")).getText();
+    }
+
+    public String getEmailsFromHomePage(ContactData contact) {
+        openContactsPage();
+        return manager.driver.findElement(By.xpath(
+                String.format("//input[@id='%s']/../../td[5]", contact.id()))).getText();
+    }
+
+    public Map<String, String> getEmailsFromModificationPage(ContactData contact) {
+        openContactsPage();
+        initContactModification(contact);
+        var result = new HashMap<String, String>();
+        var id = contact.id();
+        var email = manager.driver.findElement(By.name("email")).getAttribute("value");
+        var email2 =  manager.driver.findElement(By.name("email2")).getAttribute("value");
+        var email3 = manager.driver.findElement(By.name("email3")).getAttribute("value");
+        var emails = Stream.of(email, email2, email3)
+                .filter(e -> e != null && ! "".equals(e))
+                .collect(Collectors.joining("\n"));
+        result.put(id, emails);
+        return result;
+
     }
 
     public int getContactCount() {
@@ -148,17 +211,5 @@ public class ContactHelper extends HelperBase {
 
     private void selectGroupForView(GroupData group) {
         new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
-    }
-
-    public Map<String, String> getPhones() {
-        openContactsPage();
-        var result = new HashMap<String, String>();
-        List<WebElement> rows = manager.driver.findElements(By.name("entry"));
-        for (WebElement row : rows) {
-            var id = row.findElement(By.tagName("input")).getAttribute(("id"));
-            var phones = row.findElements(By.tagName("td")).get(5).getText();
-            result.put(id, phones);
-        }
-        return result;
     }
 }

@@ -47,7 +47,8 @@ public class ContactCreationTests extends TestBase {
                 .withPhoneHome(CommonFunctions.randomString(10))
                 .withPhoneMobile(CommonFunctions.randomString(10))
                 .withPhoneWork(CommonFunctions.randomString(10))
-                .withEmail(CommonFunctions.randomString(10)));
+                .withEmail(CommonFunctions.randomString(10))
+                .withEmail2(CommonFunctions.randomString(10)));
     }
 
     @ParameterizedTest
@@ -78,7 +79,8 @@ public class ContactCreationTests extends TestBase {
                     "phoneHomeTest123",
                     "phoneMobileTest456",
                     "phoneWorkTest789",
-                    "email@example.com"));
+                    "email@example.com",
+                    "email2@example.com"));
         }
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
@@ -108,7 +110,8 @@ public class ContactCreationTests extends TestBase {
                     "phoneHomeTest123",
                     "phoneMobileTest456",
                     "phoneWorkTest789",
-                    "email@example.com"));
+                    "email@example.com",
+                    "email2@example.com"));
         }
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
