@@ -5,6 +5,7 @@ import ru.stqa.mantis.common.CommonFunctions;
 
 public class JamesTests extends TestBase {
 
+
     @Test
     void canCreateUser () {
         app.jamesCli().addUser(

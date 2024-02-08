@@ -80,7 +80,7 @@ public class GroupHelper extends HelperBase {
         click(By.name("edit"));
     }
 
-    private void selectGroup(GroupData group) {
+    private void selectGroup(GroupData group)C {
         click(By.cssSelector(String.format("input[value='%s'", group.id())));
     }
 
