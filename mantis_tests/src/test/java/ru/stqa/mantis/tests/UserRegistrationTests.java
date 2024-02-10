@@ -45,15 +45,15 @@ public class UserRegistrationTests extends TestBase {
         user = app.developerMail().addUser();
         var email = String.format("%s@developermail.com", user.name());
 
-//        app.user().createNewAccount(userData.username(), userData.userEmail());
-//
-//        var messages = app.mail().receive(userData.userEmail(), userData.userPassword(), Duration.ofSeconds(10));
-//        var url = app.mail().extractedUrlFromEmail(messages);
-//
-//        app.user().confirmRegistration(url, userData.userRealName(), userData.userPassword());
-//
-//        app.http().login(userData.username(), userData.userPassword());
-//        Assertions.assertTrue(app.http().isLoggedIn());
+        app.user().createNewAccount(user.name(), email);
+
+        var message = app.developerMail().receive(user, Duration.ofSeconds(10));
+        var url = app.mail().extractedUrlFromEmail(message);
+
+        app.user().confirmRegistration(url,"test2", password);
+
+        app.http().login(user.name(), password);
+        Assertions.assertTrue(app.http().isLoggedIn());
     }
     @AfterEach
     void deleteMailUser() {
