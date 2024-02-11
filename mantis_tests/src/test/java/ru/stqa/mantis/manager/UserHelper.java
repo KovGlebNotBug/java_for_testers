@@ -42,7 +42,7 @@ public class UserHelper extends HelperBase{
     }
 
     private void openManagerUsersTab() {
-        click(By.cssSelector("a[href='/mantisbt-2.25.8/manage_user_page.php']"));
+        click(By.cssSelector(String.format("a[href='/%s/manage_user_page.php']", manager.property("web.domain"))));
     }
 
     private void openManagerBar() {
