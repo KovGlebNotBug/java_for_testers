@@ -16,7 +16,7 @@ public class UserRegistrationTests extends TestBase {
 
     DeveloperMailUser user;
 
-
+    /*
     public static List<UserData> randomUser() {
         var rnd = CommonFunctions.randomString(8);
         return List.of(new UserData()
@@ -38,27 +38,29 @@ public class UserRegistrationTests extends TestBase {
         Assertions.assertTrue(app.http().isLoggedIn());
     }
 
+     */
 
-//    @Test
-//    public void canRegisterUser() {
-//        var password = "password";
-//        user = app.developerMail().addUser();
-//        var email = String.format("%s@developermail.com", user.name());
-//
-//        app.user().createNewAccount(user.name(), email);
-//
-//        var message = app.developerMail().receive(user, Duration.ofSeconds(10));
-//        var url = app.mail().extractedUrlFromEmail(message);
-//
-//        app.user().confirmRegistration(url,"test2", password);
-//
-//        app.http().login(user.name(), password);
-//        Assertions.assertTrue(app.http().isLoggedIn());
-//    }
-//    @AfterEach
-//    void deleteMailUser() {
-//        app.developerMail().deleteUser(user);
-//    }
+
+    @Test
+    public void canRegisterUser() {
+        var password = "password";
+        user = app.developerMail().addUser();
+        var email = String.format("%s@developermail.com", user.name());
+
+        app.user().createNewAccount(user.name(), email);
+
+        var message = app.developerMail().receive(user, Duration.ofSeconds(10));
+        var url = app.mail().extractedUrlFromEmail(message);
+
+        app.user().confirmRegistration(url,"test2", password);
+
+        app.http().login(user.name(), password);
+        Assertions.assertTrue(app.http().isLoggedIn());
+    }
+    @AfterEach
+    void deleteMailUser() {
+        app.developerMail().deleteUser(user);
+    }
 
 
 

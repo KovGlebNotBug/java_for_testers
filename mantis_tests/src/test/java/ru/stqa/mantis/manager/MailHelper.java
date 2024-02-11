@@ -85,7 +85,7 @@ public class MailHelper extends HelperBase {
     }
 
 
-
+/*
     public String extractedUrlFromEmail(List<MailMessage> messages) {
         String url = null;
         var text = messages.get(0).content();
@@ -97,8 +97,10 @@ public class MailHelper extends HelperBase {
         return url;
     }
 
+ */
 
-    /*
+
+
     public String extractedUrlFromEmail(String messages) {
         String url = null;
         var pattern = Pattern.compile("http://\\S*");
@@ -109,7 +111,6 @@ public class MailHelper extends HelperBase {
         return url;
     }
 
-     */
 
 
 }
