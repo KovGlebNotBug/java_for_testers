@@ -16,7 +16,7 @@ public class UserRegistrationTests extends TestBase {
 
     DeveloperMailUser user;
 
-    /*
+
     public static List<UserData> randomUser() {
         var rnd = CommonFunctions.randomString(8);
         return List.of(new UserData()
@@ -30,7 +30,7 @@ public class UserRegistrationTests extends TestBase {
     @MethodSource("randomUser")
     public void canRegisterUser(UserData userData) {
         app.jamesApi().addUser(userData.userEmail(), userData.userPassword());
-        app.user().createNewAccount(userData.username(), userData.userEmail());
+        app.rest().createNewAccount(userData.username(), userData.userEmail());
         var messages = app.mail().receive(userData.userEmail(), userData.userPassword(), Duration.ofSeconds(10));
         var url = app.mail().extractedUrlFromEmail(messages);
         app.user().confirmRegistration(url, userData.userRealName(), userData.userPassword());
@@ -38,29 +38,28 @@ public class UserRegistrationTests extends TestBase {
         Assertions.assertTrue(app.http().isLoggedIn());
     }
 
-     */
 
 
-    @Test
-    public void canRegisterUser() {
-        var password = "password";
-        user = app.developerMail().addUser();
-        var email = String.format("%s@developermail.com", user.name());
-
-        app.user().createNewAccount(user.name(), email);
-
-        var message = app.developerMail().receive(user, Duration.ofSeconds(10));
-        var url = app.mail().extractedUrlFromEmail(message);
-
-        app.user().confirmRegistration(url,"test2", password);
-
-        app.http().login(user.name(), password);
-        Assertions.assertTrue(app.http().isLoggedIn());
-    }
-    @AfterEach
-    void deleteMailUser() {
-        app.developerMail().deleteUser(user);
-    }
+//    @Test
+//    public void canRegisterUser() {
+//        var password = "password";
+//        user = app.developerMail().addUser();
+//        var email = String.format("%s@developermail.com", user.name());
+//
+//        app.user().createNewAccount(user.name(), email);
+//
+//        var message = app.developerMail().receive(user, Duration.ofSeconds(10));
+//        var url = app.mail().extractedUrlFromEmail(message);
+//
+//        app.user().confirmRegistration(url,"test2", password);
+//
+//        app.http().login(user.name(), password);
+//        Assertions.assertTrue(app.http().isLoggedIn());
+//    }
+//    @AfterEach
+//    void deleteMailUser() {
+//        app.developerMail().deleteUser(user);
+//    }
 
 
 
